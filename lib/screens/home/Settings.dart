@@ -31,11 +31,6 @@ class _SettingsPageState extends State<SettingsPage> {
     StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child("/avatars/" + _name);
     StorageUploadTask uploadTask = firebaseStorageRef.putFile(_imageFile);
     StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
-
-    setState(() {
-      print("Profile Picture uploaded");
-      Scaffold.of(context).showSnackBar(SnackBar(content: Text('Profile Picture Uploaded')));
-    });
   }
 
   Future<void> _pickImage(ImageSource source) async {
@@ -43,7 +38,6 @@ class _SettingsPageState extends State<SettingsPage> {
 
     setState(() {
       _imageFile = selected;
-      print('Image Path $_imageFile');
     });
 
   }
@@ -91,19 +85,19 @@ class _SettingsPageState extends State<SettingsPage> {
       resizeToAvoidBottomPadding: false,
       body: Container(
         color: Color(0xFFEFEEF5),
-        child: Column(
+        child: ListView(
           children: <Widget>[
             Stack(
               children: <Widget>[
                 Container(
                   padding: EdgeInsets.all(40),
-                  constraints: BoxConstraints.expand(height: 170),
+                  constraints: BoxConstraints.expand(height: 150),
                   decoration: BoxDecoration(
                       color: Color(0xFF404040),
                       borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30), bottomRight:  Radius.circular(30))
                   ),
                   child: Container(
-                    padding: EdgeInsets.only(top: 25),
+                    padding: EdgeInsets.only(top: 5),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
@@ -130,8 +124,8 @@ class _SettingsPageState extends State<SettingsPage> {
 
                 SingleChildScrollView(
                   child: Container(
-                    height: 700,
-                    margin: EdgeInsets.only(top: 180),
+                    height: 450,
+                    margin: EdgeInsets.only(top: 150),
                     padding: EdgeInsets.all(20),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -146,22 +140,22 @@ class _SettingsPageState extends State<SettingsPage> {
                                 child: new SizedBox(
                                   width: 120.0,
                                   height: 120.0,
-                                child: () {
+                                  child: () {
                                     setState(() {
                                       var ref = FirebaseStorage.instance.ref().child("/avatars/"+_name);
                                       ref.getDownloadURL().then((loc) => setState(() => _imageSource = loc));
                                     });
                                     if(_imageFile != null) {
                                       return Image.file(_imageFile,
-                                      fit: BoxFit.fill);
+                                          fit: BoxFit.fill);
                                     }
                                     return Image.network(
                                         _imageSource,
                                         fit: BoxFit.fill);
-                                } (),
+                                  } (),
+                                ),
                               ),
                             ),
-                        ),
                           ),
                         ),
                         Container(
@@ -171,8 +165,6 @@ class _SettingsPageState extends State<SettingsPage> {
                               TextField(
                                 onChanged: (val) {
                                   _name = val;
-                                  print("NAME CHANGE: " + _name);
-
                                 },
                                 controller: TextEditingController(text: _name), // substituir aqui pela variavel
                                 decoration: InputDecoration(
@@ -218,18 +210,34 @@ class _SettingsPageState extends State<SettingsPage> {
                                   print("PASS CHANGE: " + _password);
                                 },
                               ),
-                              SizedBox(height: 30,),
+                              SizedBox(height: 15,),
                               InkWell(
                                 onTap: () async {
                                   uploadPic(context);
 
                                   final CollectionReference coll_users = Firestore.instance.collection('users');
 
-                                  return await coll_users.document(user.uid.toString()).updateData({
+                                  await coll_users.document(user.uid.toString()).updateData({
                                     'name' : _name,
                                     'password' : _password,
                                     'email' : _email,
                                   });
+
+                                  showDialog(context: context, child:
+                                  new AlertDialog(
+                                    title: new Text("Information was updated."),
+                                    actions: <Widget>[
+                                      FlatButton(
+                                        child: Text('Ok.'),
+                                        onPressed: () {
+                                          Navigator.of(context, rootNavigator: true).pop('dialog');
+                                          Navigator.of(context).pop();
+                                        },
+                                      ),
+                                    ],
+                                  )
+                                  );
+
                                 },
                                 child: Container(
                                   height: 40.0,

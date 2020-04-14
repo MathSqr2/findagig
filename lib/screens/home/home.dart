@@ -50,8 +50,8 @@ class _MainPageState extends State<MainPage> {
 
     return Scaffold(
       resizeToAvoidBottomPadding: false,
-      body: Container(
-        color: Colors.white,
+      body: SingleChildScrollView(
+        //color: Colors.white,
         child: Column(
           children: <Widget>[
             Stack(
@@ -97,10 +97,10 @@ class _MainPageState extends State<MainPage> {
                   },
                   child: Container(
                     height: 430,
-                    margin: EdgeInsets.only(top: 200),
+                    margin: EdgeInsets.only(top: 155),
                     padding: EdgeInsets.all(20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    child: ListView(
+                      //crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Container(
                           margin: EdgeInsets.only(right: 10, left: 10, bottom: 15),
@@ -122,12 +122,12 @@ class _MainPageState extends State<MainPage> {
                               Text(
                                 "Find a gig",
                                 style: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  color: Color(0xFF404040),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 25
-                                  ),
+                                    fontFamily: 'Montserrat',
+                                    color: Color(0xFF404040),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 23
                                 ),
+                              ),
 
                             ],
                           ),
@@ -141,7 +141,7 @@ class _MainPageState extends State<MainPage> {
                           },
                           child: Container(
                             margin: EdgeInsets.only(right: 10, left: 10, bottom: 15),
-                            height: 50,
+                            height: 48,
                             width: 300,
                             padding: EdgeInsets.all(10),
                             decoration: BoxDecoration(
@@ -160,7 +160,7 @@ class _MainPageState extends State<MainPage> {
                                     fontFamily: 'Montserrat',
                                     color: Color(0xFF404040),
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 25
+                                    fontSize: 23
                                 ),
                                 ),
                               ],
@@ -184,7 +184,7 @@ class _MainPageState extends State<MainPage> {
                           },
                           child: Container(
                             margin: EdgeInsets.only(right: 10, left: 10, bottom: 15),
-                            height: 50,
+                            height: 48,
                             width: 300,
                             padding: EdgeInsets.all(10),
                             decoration: BoxDecoration(
@@ -203,7 +203,7 @@ class _MainPageState extends State<MainPage> {
                                     fontFamily: 'Montserrat',
                                     color: Color(0xFF404040),
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 25
+                                    fontSize: 23
                                 ),
                                 ),
 
@@ -220,7 +220,7 @@ class _MainPageState extends State<MainPage> {
                           },
                           child: Container(
                             margin: EdgeInsets.only(right: 10, left: 10, bottom: 15),
-                            height: 50,
+                            height: 48,
                             width: 300,
                             padding: EdgeInsets.all(10),
                             decoration: BoxDecoration(
@@ -239,7 +239,7 @@ class _MainPageState extends State<MainPage> {
                                     fontFamily: 'Montserrat',
                                     color: Color(0xFF404040),
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 25
+                                    fontSize: 23
                                 ),
                                 ),
                               ],
@@ -261,7 +261,7 @@ class _MainPageState extends State<MainPage> {
                           },
                           child: Container(
                             margin: EdgeInsets.only(right: 10, left: 10, bottom: 15),
-                            height: 50,
+                            height: 48,
                             width: 300,
                             padding: EdgeInsets.all(10),
                             decoration: BoxDecoration(
@@ -280,7 +280,7 @@ class _MainPageState extends State<MainPage> {
                                     fontFamily: 'Montserrat',
                                     color: Color(0xFF404040),
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 25
+                                    fontSize: 23
                                 ),
                                 ),
                               ],
@@ -294,7 +294,7 @@ class _MainPageState extends State<MainPage> {
                           },
                           child: Container(
                             margin: EdgeInsets.only(right: 10, left: 10, bottom: 15),
-                            height: 50,
+                            height: 48,
                             width: 300,
                             padding: EdgeInsets.all(10),
                             decoration: BoxDecoration(
@@ -313,7 +313,7 @@ class _MainPageState extends State<MainPage> {
                                     fontFamily: 'Montserrat',
                                     color: Color(0xFF404040),
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 25
+                                    fontSize: 23
                                 ),
                                 ),
                               ],
@@ -332,6 +332,5 @@ class _MainPageState extends State<MainPage> {
     );
   }
 }
-
 
 

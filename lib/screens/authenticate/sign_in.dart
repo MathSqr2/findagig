@@ -1,3 +1,4 @@
+import 'package:findagig/screens/authenticate/recoverpw.dart';
 import 'package:findagig/shared/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:findagig/services/auth.dart';
@@ -101,7 +102,12 @@ class _SignInState extends State<SignIn> {
                     alignment: Alignment(1.0, 0.0),
                     padding: EdgeInsets.only(top:15.0, left:20.0),
                     child: InkWell(
-                      onTap: (){},
+                      onTap: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => RecoverPwPage()),
+                        );
+                      },
                       child: Text(
                         'Forgot Password?',
                         style: TextStyle(

@@ -80,6 +80,7 @@ class _SearchState extends State<Search> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       body: Container(
         color: Color(0xFFEFEEF5),
         child: Column(
@@ -119,7 +120,7 @@ class _SearchState extends State<Search> {
                   ),
                 ),
                 Container(
-                  height: 500,
+                  height: 442,
                   margin: EdgeInsets.only(top: 150),
                   padding: EdgeInsets.all(20),
                   child: Column(
@@ -219,7 +220,7 @@ class _SearchState extends State<Search> {
                               max: 100,
                               divisions: 10,
                             ),
-                            SizedBox(height: 20,),
+                            SizedBox(height: 5,),
                             InkWell(
                               onTap: () {
                                 if (_name != null) {
@@ -254,7 +255,7 @@ class _SearchState extends State<Search> {
                                 );
                               },
                               child: Container(
-                                height: 60.0,
+                                height: 41.0,
                                 color: Colors.transparent,
                                 child: Container(
                                   decoration: BoxDecoration(
