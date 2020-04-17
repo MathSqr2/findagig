@@ -103,8 +103,6 @@ class _RecoverPwPageState extends State<RecoverPwPage> {
                                       fontWeight: FontWeight.bold,
                                       fontFamily: 'Montserrat')),
                             ),
-                        
-                        
                       ),
                     ),
                   ),

@@ -130,6 +130,10 @@ class _SignInState extends State<SignIn> {
                       elevation: 7.0,
                       child: GestureDetector(
                         onTap: () async {
+                          setState(() {
+                            loading = true;
+                          });
+
                           dynamic result = await _auth.signInWithMail(mail, password);
 
                           if(result == null)

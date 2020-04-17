@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:findagig/shared/loading.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -18,34 +19,40 @@ class MapDetail extends StatefulWidget {
 }
 
 class _MapDetailState extends State<MapDetail> {
+  bool loading = true;
+
   final Set<Marker> _markers = new Set();
   Position pos;
 
-  List<LatLng> points;
   List<LatLng> markers = List();
 
   static LatLng _mainLocation;
-  static LatLng _currentPos = new LatLng(0, 0);
+  static LatLng _currentPos;
 
 
   final Set<Polyline> polyline = {};
   GoogleMapController _controller;
+
   List<LatLng> routeCoords;
   GoogleMapPolyline googleMapPolyline = new GoogleMapPolyline(apiKey: "AIzaSyDG6w3Kp-jMS5hWqdLpehltArucB0MH-MY");
 
-  void getCurrentPosition() async
+  Future<Position> getCurrentPosition() async
   {
     Position res = await Geolocator().getLastKnownPosition(desiredAccuracy: LocationAccuracy.high);
     setState(() {
       pos = res;
       _currentPos = LatLng(pos.latitude, pos.longitude);
+      loading = false;
     });
+    return res;
   }
 
   @override
   void initState() {
     getCurrentPosition();
     super.initState();
+
+
     _mainLocation = LatLng(widget.post.data['local'].latitude, widget.post.data['local'].longitude);
 
     if(_mainLocation != null){
@@ -54,16 +61,12 @@ class _MapDetailState extends State<MapDetail> {
 
     if(_currentPos != null) {
       markers.add(_currentPos);
-      print("CURR POS");
-    }
-    else {
-      print("ELSE AFTER: " + _currentPos.toString());
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return loading ? Loading() : MaterialApp(
       home: Scaffold(
           body: Column(
             mainAxisAlignment: MainAxisAlignment.center,

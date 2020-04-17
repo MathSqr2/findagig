@@ -30,7 +30,7 @@ class DatabaseService {
       'contact': 913123123,
       'description' : "Empty",
       'employer' : "Andrade",
-      'local': new GeoPoint(50, 50),
+      'local': new GeoPoint(0, 0),
       'name' : 'name',
       'reward': 0,
       'taken': false,

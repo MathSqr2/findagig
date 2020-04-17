@@ -1,6 +1,5 @@
 import 'package:findagig/models/user.dart';
 import 'package:findagig/services/database.dart';
-import 'package:findagig/shared/types_of_gig.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {

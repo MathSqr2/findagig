@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:findagig/models/user.dart';
 import 'package:findagig/screens/home/CameraScreen.dart';
 import 'package:findagig/services/database.dart';
+import 'package:findagig/shared/loading.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -23,8 +24,7 @@ class _SettingsPageState extends State<SettingsPage> {
   var _email = "";
   var _password = "";
   var _imageSource = "";
-  File _image;
-
+  bool loading = true;
   File _imageFile;
 
   Future uploadPic(BuildContext context) async{
@@ -42,37 +42,50 @@ class _SettingsPageState extends State<SettingsPage> {
 
   }
 
-  Future<Stream<QuerySnapshot>> getUserInfo() async {
+  Future<QuerySnapshot> getUserInfo() async {
     var firestore = Firestore.instance;
-    Stream<QuerySnapshot> qn;
+    print("---------------------------- VALUE OF UID: "+ widget.user);
+    QuerySnapshot qn;
     qn = await firestore.collection("users")
         .where('uid', isEqualTo: widget.user)
-        .snapshots();
+        .snapshots().first;
 
-    qn.forEach((element) {
-      element.documents.forEach((aux) {
-        _name = (aux.data['name']);
-        _email = (aux.data['email']);
-        _password = (aux.data['password']);
-        _imageSource = (aux.data['image']);
-      });
+    qn.documents.forEach((element) {
+        _name = (element.data['name']);
+        print("---------------------------- VALUE OF name: "+ _name);
+        _email = (element.data['email']);
+        print("---------------------------- VALUE OF email: "+ _email);
+        _password = (element.data['password']);
+        print("---------------------------- VALUE OF pass: "+ _password);
+        _imageSource = (element.data['image']);
+        print("---------------------------- VALUE OF image: "+ _imageSource);
     });
 
     setState(() {
-      print("-------- Setting state");
       _name = _name;
       _email = _email;
       _password = _password;
       _imageSource = _imageSource;
+      loading = false;
     });
 
     return qn;
   }
 
+  void updateSettings(String user_uid) async {
+    final CollectionReference coll_users = Firestore.instance.collection('users');
+
+    await coll_users.document(user_uid).updateData({
+      'name' : _name,
+      'password' : _password,
+      'email' : _email,
+    });
+  }
   @override
   void initState(){
-    super.initState();
     getUserInfo();
+
+    super.initState();
   }
 
 
@@ -80,8 +93,7 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     var user = Provider.of<User>(context);
 
-
-    return Scaffold(
+    return loading ? Loading() : Scaffold(
       resizeToAvoidBottomPadding: false,
       body: Container(
         color: Color(0xFFEFEEF5),
@@ -141,10 +153,12 @@ class _SettingsPageState extends State<SettingsPage> {
                                   width: 120.0,
                                   height: 120.0,
                                   child: () {
+
                                     setState(() {
                                       var ref = FirebaseStorage.instance.ref().child("/avatars/"+_name);
                                       ref.getDownloadURL().then((loc) => setState(() => _imageSource = loc));
                                     });
+
                                     if(_imageFile != null) {
                                       return Image.file(_imageFile,
                                           fit: BoxFit.fill);
@@ -215,27 +229,21 @@ class _SettingsPageState extends State<SettingsPage> {
                                 onTap: () async {
                                   uploadPic(context);
 
-                                  final CollectionReference coll_users = Firestore.instance.collection('users');
-
-                                  await coll_users.document(user.uid.toString()).updateData({
-                                    'name' : _name,
-                                    'password' : _password,
-                                    'email' : _email,
-                                  });
+                                  updateSettings(user.uid.toString());
 
                                   showDialog(context: context, child:
-                                  new AlertDialog(
-                                    title: new Text("Information was updated."),
-                                    actions: <Widget>[
-                                      FlatButton(
-                                        child: Text('Ok.'),
-                                        onPressed: () {
-                                          Navigator.of(context, rootNavigator: true).pop('dialog');
-                                          Navigator.of(context).pop();
-                                        },
-                                      ),
-                                    ],
-                                  )
+                                    new AlertDialog(
+                                      title: new Text("Information was updated."),
+                                      actions: <Widget>[
+                                        FlatButton(
+                                          child: Text('Ok.'),
+                                          onPressed: () {
+                                            Navigator.of(context, rootNavigator: true).pop('dialog');
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ],
+                                    )
                                   );
 
                                 },
