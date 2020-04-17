@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:findagig/shared/loading.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:barcode_scan/barcode_scan.dart';
@@ -17,38 +18,32 @@ class QrCodePage extends StatefulWidget {
 class _QrCodePageState extends State<QrCodePage> {
   String message = 'QR CODE SCANNER';
   String barcode = "";
+  bool loading = false;
+
   DocumentSnapshot post;
 
-  Future getGigs(String id) {
+  getGigs(String id) {
     var firestore = Firestore.instance;
-    print("------------------ VALOR DO ID "+ id +" ------------------");
     firestore.collection("gigs").document(id).snapshots().listen((doc) => post = doc);
 
     Future.delayed(Duration(milliseconds: 500), () {
       Navigator.push(context, MaterialPageRoute(builder: (context) => DetailGig(post: post)));
+      loading = false;
+      print("VALOR DO LOADING: "+ loading.toString());
     });
-
-    print("------------------ VALOR DO post "+ post.toString() +" ------------------");
   }
 
   Future scan() async {
+    loading = true;
+
+    print("VALOR DO LOADING: "+ loading.toString());
+
     try
     {
       String barcode = await BarcodeScanner.scan();
       setState(() async {
         this.barcode = barcode;
         getGigs(this.barcode);
-
-        new Container(
-            color: Colors.white,
-            child: Center(
-              child: SpinKitChasingDots(
-                color: Colors.yellow,
-                size: 50.0,
-              ),
-            )
-        );
-
       });
 
     }
@@ -70,13 +65,15 @@ class _QrCodePageState extends State<QrCodePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    print("VALOR DO LOADING: "+ loading.toString());
+    loading = false;
+    return loading ? Loading() : Scaffold(
       appBar: AppBar (
         title: Text('QRCode Reader'),
         backgroundColor: Colors.yellow[700],
       ),
       body: Center (
-        child:
+          child:
           Text (
             message,
           )
