@@ -1,9 +1,9 @@
 import 'package:findagig/models/user.dart';
-import 'package:findagig/screens/home/home.dart';
+import 'package:findagig/screens/home/HomeMenu.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:findagig/models/Type.dart';
-import 'list.dart';
+import 'GigListPage.dart';
 
 class SearchPage extends StatelessWidget {
   // This widget is the root of your application.
@@ -240,7 +240,7 @@ class _SearchState extends State<Search> {
                                 }
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => MyHomePage(
+                                  MaterialPageRoute(builder: (context) => GigList(
                                     Title: 'Search result',
                                     Name: _name,
                                     Employer: _employer,

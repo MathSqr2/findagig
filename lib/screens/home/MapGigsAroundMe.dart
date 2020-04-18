@@ -1,12 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:findagig/screens/home/detailGig.dart';
+import 'package:findagig/screens/home/detailGigPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:google_map_polyline/google_map_polyline.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
-import 'mapDetail.dart';
 
 void main() => runApp(MapsDemo());
 
@@ -164,9 +161,7 @@ class _MyAppState extends State<MapsDemo> {
             )
         );
       }
-
     }
-
     return _markers;
   }
 

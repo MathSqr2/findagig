@@ -1,15 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:findagig/models/user.dart';
-import 'package:findagig/screens/home/CameraScreen.dart';
-import 'package:findagig/services/database.dart';
 import 'package:findagig/shared/loading.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'dart:io';
-import 'package:path/path.dart';
 
 class SettingsPage extends StatefulWidget {
   String user;
@@ -44,21 +40,17 @@ class _SettingsPageState extends State<SettingsPage> {
 
   Future<QuerySnapshot> getUserInfo() async {
     var firestore = Firestore.instance;
-    print("---------------------------- VALUE OF UID: "+ widget.user);
     QuerySnapshot qn;
+
     qn = await firestore.collection("users")
         .where('uid', isEqualTo: widget.user)
         .snapshots().first;
 
     qn.documents.forEach((element) {
         _name = (element.data['name']);
-        print("---------------------------- VALUE OF name: "+ _name);
         _email = (element.data['email']);
-        print("---------------------------- VALUE OF email: "+ _email);
         _password = (element.data['password']);
-        print("---------------------------- VALUE OF pass: "+ _password);
         _imageSource = (element.data['image']);
-        print("---------------------------- VALUE OF image: "+ _imageSource);
     });
 
     setState(() {
@@ -194,8 +186,6 @@ class _SettingsPageState extends State<SettingsPage> {
                               TextField(
                                 onChanged: (val) {
                                   _email = val;
-                                  print("MAIL CHANGE: " + _email);
-
                                 },
                                 controller: TextEditingController(text: _email), // substituir pela variavel
                                 decoration: InputDecoration(
@@ -221,7 +211,6 @@ class _SettingsPageState extends State<SettingsPage> {
                                 obscureText: true,
                                 onChanged: (val) {
                                   _password = val;
-                                  print("PASS CHANGE: " + _password);
                                 },
                               ),
                               SizedBox(height: 15,),

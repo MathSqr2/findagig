@@ -3,16 +3,16 @@ import 'dart:ffi';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:findagig/main.dart';
 import 'package:findagig/models/user.dart';
-import 'package:findagig/screens/home/QRCode.dart';
-import 'package:findagig/screens/home/map.dart';
+import 'package:findagig/screens/home/QRCodePage.dart';
+import 'package:findagig/screens/home/MapGigsAroundMe.dart';
 import 'package:findagig/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
-import 'Search.dart';
-import 'Settings.dart';
-import 'detailGig.dart';
-import 'list.dart';
+import 'SearchPage.dart';
+import 'SettingsPage.dart';
+import 'detailGigPage.dart';
+import 'GigListPage.dart';
 
 
 class MyApp extends StatelessWidget {
@@ -46,7 +46,6 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     var user = Provider.of<User>(context);
-    var user_uid = user.uid;
 
     return Scaffold(
       resizeToAvoidBottomPadding: false,
@@ -68,7 +67,7 @@ class _MainPageState extends State<MainPage> {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text('WELCOME',
+                        Text('Welcome',
                           style: TextStyle(
                               fontFamily: 'Montserrat',
                               color: Colors.white,
@@ -88,50 +87,52 @@ class _MainPageState extends State<MainPage> {
                     ),
                   ),
                 ),
-                InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SearchPage()),
-                    );
-                  },
-                  child: Container(
+                Container(
                     height: 430,
                     margin: EdgeInsets.only(top: 155),
                     padding: EdgeInsets.all(20),
                     child: ListView(
                       //crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Container(
-                          margin: EdgeInsets.only(right: 10, left: 10, bottom: 15),
-                          height: 50,
-                          width: 300,
-                          padding: EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.all(Radius.circular(15)),
-                            boxShadow: [
-                              new BoxShadow(
-                                color: Colors.grey,
-                                blurRadius: 10.0,
-                              ),
-                            ],
-                          ),
-                          child: Column(
-                            children: <Widget>[
-                              Text(
-                                "Find a gig",
-                                style: TextStyle(
-                                    fontFamily: 'Montserrat',
-                                    color: Color(0xFF404040),
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 23
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => SearchPage()),
+                            );
+                          },
+                          child: Container(
+                            margin: EdgeInsets.only(right: 10, left: 10, bottom: 15),
+                            height: 50,
+                            width: 300,
+                            padding: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.all(Radius.circular(15)),
+                              boxShadow: [
+                                new BoxShadow(
+                                  color: Colors.grey,
+                                  blurRadius: 10.0,
                                 ),
-                              ),
+                              ],
+                            ),
+                            child: Column(
+                              children: <Widget>[
+                                Text(
+                                  "Find a gig",
+                                  style: TextStyle(
+                                      fontFamily: 'Montserrat',
+                                      color: Color(0xFF404040),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 23
+                                  ),
+                                ),
 
-                            ],
+                              ],
+                            ),
                           ),
                         ),
+
                         InkWell(
                           onTap: () {
                             Navigator.push(
@@ -171,13 +172,13 @@ class _MainPageState extends State<MainPage> {
                           onTap: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => MyHomePage(
+                              MaterialPageRoute(builder: (context) => GigList(
                                 Title: 'History',
                                 Name: null,
                                 Employer: null,
                                 Revenue_max: null,
                                 Taken: null,
-                                Employee: user_uid,
+                                Employee: user.uid,
                               ),
                               ),
                             );
@@ -256,7 +257,7 @@ class _MainPageState extends State<MainPage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => SettingsPage(user_uid)),
+                                  builder: (context) => SettingsPage(user.uid)),
                             );
                           },
                           child: Container(
@@ -323,7 +324,7 @@ class _MainPageState extends State<MainPage> {
                       ],
                     ),
                   ),
-                ),
+
               ],
             )
           ],

@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
-import 'detailGig.dart';
+import 'detailGigPage.dart';
 
-class Home extends StatelessWidget {
+class GigListHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
@@ -15,7 +15,7 @@ class Home extends StatelessWidget {
       theme: new ThemeData(
         primaryColor: Colors.yellow[700],
       ),
-      home: new MyHomePage(
+      home: new GigList(
         Title: '',
         Name: null,
         Employer: null,
@@ -27,8 +27,8 @@ class Home extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatefulWidget{
-  MyHomePage({Key key, this.Title, this.Name, this.Employer, this.Revenue_max, this.Taken, this.Employee, this.Revenue_min, this.City, this.Type}) : super(key: key);
+class GigList extends StatefulWidget{
+  GigList({Key key, this.Title, this.Name, this.Employer, this.Revenue_max, this.Taken, this.Employee, this.Revenue_min, this.City, this.Type}) : super(key: key);
 
   final String Title;
   final String Name;
@@ -41,11 +41,11 @@ class MyHomePage extends StatefulWidget{
   final String Type;
 
   @override
-  _MyHomePageState createState() => new _MyHomePageState();
+  _GigListState createState() => new _GigListState();
 
 }
 
-class _MyHomePageState  extends State<MyHomePage>{
+class _GigListState  extends State<GigList>{
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -120,17 +120,11 @@ class _ListGigsState extends State<ListGigs> {
           .snapshots();
     }
 
-    if(qn == null)
-    {
-      print("------------ EMPTY ------------");
-    }
-
     return qn;
   }
 
   navigateToDetail(DocumentSnapshot post) {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => DetailGig(post: post)));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => DetailGig(post: post)));
   }
 
   @override

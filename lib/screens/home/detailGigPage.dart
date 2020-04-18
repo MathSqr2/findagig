@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'mapDetail.dart';
+import 'MapDetailPage.dart';
 
 class DetailGig extends StatefulWidget {
 
@@ -22,6 +22,8 @@ class _DetailGigState extends State<DetailGig> {
 
   String text_on_button = "Apply to gig";
   MaterialColor color_on_button = Colors.red;
+  Icon a = new Icon(Icons.check_box_outline_blank);
+  bool aux = false;
 
   void updateFirebase(String id, String uid)
   {
@@ -30,20 +32,21 @@ class _DetailGigState extends State<DetailGig> {
         .updateData({'taken' : true});
     Firestore.instance.collection("gigs").document(id)
         .updateData({'employee' : a});
-
   }
 
-  Icon a = new Icon(Icons.check_box_outline_blank);
-  bool aux = false;
-
   @override
-  Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
-
+  void initState()
+  {
     if(widget.post.data['taken']) {
       text_on_button = "You applied for this gig!";
       color_on_button = Colors.green;
     }
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final user = Provider.of<User>(context);
 
     return Scaffold(
       appBar: AppBar (
@@ -100,7 +103,6 @@ class _DetailGigState extends State<DetailGig> {
               ),
               FlatButton (
                 onPressed: () {
-                  print("ver mapa");
                   Navigator.push(context, MaterialPageRoute(builder: (context) => MapDetail(post : widget.post)));
                 },
                 child: Text ("Ver local no mapa"),
@@ -108,7 +110,6 @@ class _DetailGigState extends State<DetailGig> {
               ),
               FlatButton (
                 onPressed: () {
-                  print("aplicar a gig");
                   updateFirebase(widget.post.documentID, user.uid);
 
                   setState(() {

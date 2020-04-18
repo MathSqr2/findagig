@@ -1,6 +1,6 @@
-import 'package:findagig/screens/authenticate/register.dart';
+import 'package:findagig/screens/authenticate/RegisterPage.dart';
 import 'package:flutter/material.dart';
-import 'package:findagig/screens/authenticate/sign_in.dart';
+import 'package:findagig/screens/authenticate/LogInPage.dart';
 
 class Authenticate extends StatefulWidget {
   @override

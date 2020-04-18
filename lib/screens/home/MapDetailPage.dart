@@ -9,9 +9,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:permission/permission.dart';
 
 class MapDetail extends StatefulWidget {
-
   final DocumentSnapshot post;
-
   const MapDetail({this.post});
 
   @override
@@ -25,16 +23,15 @@ class _MapDetailState extends State<MapDetail> {
   Position pos;
 
   List<LatLng> markers = List();
+  List<LatLng> routeCoords;
 
   static LatLng _mainLocation;
   static LatLng _currentPos;
 
-
   final Set<Polyline> polyline = {};
-  GoogleMapController _controller;
-
-  List<LatLng> routeCoords;
   GoogleMapPolyline googleMapPolyline = new GoogleMapPolyline(apiKey: "AIzaSyDG6w3Kp-jMS5hWqdLpehltArucB0MH-MY");
+
+  GoogleMapController _controller;
 
   Future<Position> getCurrentPosition() async
   {
@@ -50,8 +47,6 @@ class _MapDetailState extends State<MapDetail> {
   @override
   void initState() {
     getCurrentPosition();
-    super.initState();
-
 
     _mainLocation = LatLng(widget.post.data['local'].latitude, widget.post.data['local'].longitude);
 
@@ -62,6 +57,8 @@ class _MapDetailState extends State<MapDetail> {
     if(_currentPos != null) {
       markers.add(_currentPos);
     }
+
+    super.initState();
   }
 
   @override
@@ -90,7 +87,6 @@ class _MapDetailState extends State<MapDetail> {
   }
 
   void _onMapCreated(GoogleMapController controller) {
-    print("------------ ON MAP CREATED");
     setState(() {
       _controller = controller;
 
@@ -102,14 +98,10 @@ class _MapDetailState extends State<MapDetail> {
           color: Colors.blue,
           startCap: Cap.roundCap,
           endCap: Cap.buttCap));
-
-      print("----------- POLYLINE:" + polyline.toString());
     });
   }
 
-
   Set<Marker> myMarker() {
-    print("Adding markers.");
     setState(() {
       _markers.add(Marker(
         // This marker id can be anything that uniquely identifies each marker.

@@ -1,4 +1,4 @@
-import 'package:findagig/screens/authenticate/sign_in.dart';
+import 'package:findagig/screens/authenticate/LogInPage.dart';
 import 'package:findagig/services/auth.dart';
 import 'package:findagig/shared/loading.dart';
 import 'package:flutter/material.dart';

@@ -4,13 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:qr_flutter/qr_flutter.dart';
-
-import 'detailGig.dart';
+import 'detailGigPage.dart';
 
 class QrCodePage extends StatefulWidget {
-
   @override
   _QrCodePageState createState() => _QrCodePageState();
 }
@@ -65,7 +61,6 @@ class _QrCodePageState extends State<QrCodePage> {
 
   @override
   Widget build(BuildContext context) {
-    print("VALOR DO LOADING: "+ loading.toString());
     loading = false;
     return loading ? Loading() : Scaffold(
       appBar: AppBar (

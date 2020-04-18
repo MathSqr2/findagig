@@ -1,4 +1,4 @@
-import 'package:findagig/screens/authenticate/recoverpw.dart';
+import 'package:findagig/screens/authenticate/RecoverPage.dart';
 import 'package:findagig/shared/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:findagig/services/auth.dart';
@@ -121,7 +121,6 @@ class _SignInState extends State<SignIn> {
                   ),
                   SizedBox(height: 25.0,),
                   Container(
-
                     height: 40.0,
                     child: Material(
                       borderRadius: BorderRadius.circular(20.0),
@@ -175,11 +174,16 @@ class _SignInState extends State<SignIn> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Center(
-                            child: Text('Log in with Google',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'Montserrat'
-                                )
+                            child: InkWell(
+                              onTap: () {
+                                widget.toggleView();
+                              },
+                              child: Text('Register',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'Montserrat'
+                                  )
+                              ),
                             ),
                           )
                         ],
@@ -190,33 +194,6 @@ class _SignInState extends State<SignIn> {
               )
           ),
           SizedBox(height: 5.0),
-          Row(
-
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                'New to GigFinder ?',
-                style: TextStyle(
-                    fontFamily: 'Montserrat'
-                ),
-              ),
-              SizedBox(width: 5.0),
-              InkWell(
-                onTap: (){
-                  widget.toggleView();
-                },
-                child: Text(
-                  'Register',
-                  style: TextStyle(
-                      color: Colors.yellow,
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.bold,
-                      decoration: TextDecoration.underline
-                  ),
-                ),
-              ),
-            ],
-          )
         ],
       )
     );
